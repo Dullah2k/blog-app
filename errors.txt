@@ -1,0 +1,33 @@
+============ ERROR 1 ============
+after i have changed my default database from sqlite3 to postgresql
+i have successfully dumped the data at this point to a JSON file, 
+but when i run py manage.py migrate
+i keep getting the error:
+...
+psycopg2.errors.CannotCoerce: cannot cast type time without time zone to timestamp with time zone
+LINE 1: ...ted" TYPE timestamp with time zone USING "created"::timestam...
+
+The above exception was the direct cause of the following exception:
+...
+django.db.utils.ProgrammingError: cannot cast type time without time zone to timestamp with time zone
+LINE 1: ...ted" TYPE timestamp with time zone USING "created"::timestam...
+
+============ SOLUTION TO ERROR 1 ============
+Apparently the issue was in my migration file where there were incorrect field 
+definitions for the publish, created, and updated fields. They are currently 
+defined as TimeField instead of DateTimeField. This is causing the error when 
+attempting to cast time without time zone to timestamp with time zone
+
+so i manually replaced the TimeField with DateTimeField
+
+NB:The error happened when i mistakenly run migrations with DateTimeFields defined 
+as TimeField in the models.py file
+
+============ ============ ============ ============
+
+============ ERROR 1 ============
+After moving to postgresql iam getting the error:
+AttributeError at /admin/blog/post/8/change/
+'datetime.time' object has no attribute 'date'
+on each and every post probably due to TimeField error before
+
