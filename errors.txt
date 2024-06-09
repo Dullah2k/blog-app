@@ -25,9 +25,55 @@ as TimeField in the models.py file
 
 ============ ============ ============ ============
 
-============ ERROR 1 ============
+
+
+============ ============ ============ ============
+ERROR 2
 After moving to postgresql iam getting the error:
 AttributeError at /admin/blog/post/8/change/
 'datetime.time' object has no attribute 'date'
 on each and every post probably due to TimeField error before
 
+SOLUTION TO ERROR 2 
+Since these errors persisted in almost every POST model
+I manually DROPED the Blog database in postgresql
+
+============ ============ ============ ============
+
+
+
+
+============ ============ ============ ============
+MERGING ERROR
+I have faced merging error and failed to resolve merging conflicts in the files-
+blog/__pycache__/sitemaps.cpython-311.pyc,
+db.sqlite3,
+my_blog/__pycache__/settings.cpython-311.pyc,
+my_blog/__pycache__/urls.cpython-311.pyc
+
+SOLUTION TO MERGING ERROR
+Merge conflicts in files like __pycache__ files and db.sqlite3 
+are common when working with version control systems like Git, 
+but they should not be merged manually. 
+These files are generated automatically and should not be included 
+in version control in the first place. 
+Here’s how you can resolve these conflicts:
+
+Step 1: Remove the files from the repository
+git rm --cached blog/__pycache__/sitemaps.cpython-311.pyc
+git rm --cached db.sqlite3
+git rm --cached my_blog/__pycache__/settings.cpython-311.pyc
+git rm --cached my_blog/__pycache__/urls.cpython-311.pyc
+
+Step 2: Add these files to .gitignore
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore SQLite database
+db.sqlite3
+
+Step 3: Commit the changes
+git add .gitignore
+git commit -m "Remove pycache and database files from version control and add them to .gitignore"
+============ ============ ============ ============
